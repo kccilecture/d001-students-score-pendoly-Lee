@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
 import csv
+from functools import reduce
 
 
 def load_from_csv(filepath):
@@ -27,7 +28,15 @@ def subject_average(student_scores: dict, subjects: list):
     이 반의 각 과목별 평균을 구해서 딕셔너리로 반환
     예) {"국어": 80.8, "수학": 35.3, "영어": 96.6, "과학": 85.3, "사회": 38.8}
     """
-    pass
+    sub_avg = {}
+    num = len(student_scores)
+
+    for idx, subject in enumerate(subjects):
+        total = sum(int(scores[idx]) for scores in student_scores.values())
+        avg = total / num
+        sub_avg[subject] = round(avg, 1)  # 소수점 1자리 반올림
+
+    return sub_avg
 
 
 def student_average(student_scores: dict):
@@ -35,10 +44,25 @@ def student_average(student_scores: dict):
     각 학생별 전과목 평균 점수를 정렬된 튜플의 리스트로 반환
     예) [("이영희", 89.8), ("김철수", 86.6), ("박민수", 84.8)]
     """
-    pass
+    stu_avg = []
+    
+    for name, scores in student_scores.items():
+        # 문자열을 int로 변환
+        avg = sum(int(s) for s in scores) / len(scores)
+        stu_avg.append((name, round(avg, 1)))
+
+    # 평균 점수 기준 내림차순 정렬
+    stu_avg.sort(key=lambda x: x[1], reverse=True)
+
+    return stu_avg
+
+
 
 
 if __name__ == "__main__":
+    
+    filepath = "score.csv"
+    
     if len(sys.argv) < 2:
         print(f"USAGE: {sys.argv[0]} <csv_file>")
         sys.exit()

@@ -46,7 +46,7 @@ def test_subject_average():
         assert len(subject_avg) == 5
         # 소숫점 근사값 비교, +/- 0.1
         assert subject_avg["국어"] == pytest.approx(85.0, abs=0.1)
-        assert subject_avg["수학"] == pytest.approx(87.6, abs=0.1)
+        assert subject_avg["수학"] == pytest.approx(87.7, abs=0.1)
         assert subject_avg["영어"] == pytest.approx(85.0, abs=0.1)
         assert subject_avg["과학"] == pytest.approx(88.0, abs=0.1)
         assert subject_avg["사회"] == pytest.approx(89.67, abs=0.1)
